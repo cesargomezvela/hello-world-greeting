@@ -16,7 +16,7 @@ node('docker') {
     archive 'target/*.jar'
   }
   stage ('Publish'){
-    def server = Artifactory.newServer url: 'http://10.0.2.15:8081'
+    def server = Artifactory.server 'Default Artifactory Server'
     def uploadSpec = """{
       "files": [
         {
