@@ -7,6 +7,14 @@ node('docker') {
     junit '**/target/surefire-reports/TEST-*.xml'
     archive 'target/*.jar'
   }
+  stage('Static Code Analysis'){
+    sh 'mvn clean verify sonar:sonar -Dsonar.host.url=http://10.0.2.15:9000 -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
+  }
+  stage ('Integration Test'){
+    sh 'mvn clean verify -Dsurefire.skip=true';
+    junit '**/target/failsafe-reports/TEST-*.xml'
+    archive 'target/*.jar'
+  }
   stage ('Publish'){
     def server = Artifactory.server 'Default Artifactory Server'
     def uploadSpec = """{
