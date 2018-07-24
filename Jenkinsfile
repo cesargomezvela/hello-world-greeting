@@ -63,7 +63,7 @@ node('production') {
           "props": "Performance-Tested=Yes;Integration-Tested=Yes"
         }
       ]
-    }""
+    }"""
     server.download(downloadSpec)
   }
 }
